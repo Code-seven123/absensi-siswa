@@ -1,13 +1,17 @@
 <?php
+  session_start();
   require "vendor/autoload.php";
   require "utility.php";
   use PhpOffice\PhpSpreadsheet\Spreadsheet;
   use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-
-  try {
-    $json = file_get_contents(__DIR__ . "/config.json");
+  
+  $data = jwtV(isset($_SESSION["logindata"]) ? $_SESSION["logindata"] : "", $config["key"]);
+  if($data["status"] == false) {
+    redirect("auth/login.php");
+  }
+  $json = file_get_contents(__DIR__ . "/config.json");
     $config = json_decode($json, true);
+  try {
     $host = $config['mysql']['host'];
     $db = $config["mysql"]["database"];
     $dsn = "mysql:host=$host;dbname=$db";
@@ -19,7 +23,6 @@
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 } catch (Exception $e) {
 }
-
   $tahun = isset($_POST["year"]) ? $_POST["year"] : date("Y");
   $bulan = isset($_POST["month"]) ? $_POST["month"] : date("m");
   $kelas = isset($_POST["kelas"]) ? $_POST["kelas"] : 3;

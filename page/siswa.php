@@ -38,7 +38,7 @@
                     echo '';
                 }
             }
-        ?>" aria-current="page" href="?page=<?= base64_encode('siswa') ?>">Siswa</a>
+        ?>" aria-current="page" href="?page=<?= base64_encode('siswa') ?>&kelas=<?= $_GET['kelas'] ?>">Siswa</a>
     </li>
     <li class="nav-item">
         <a class="nav-link <?php
@@ -141,3 +141,28 @@
         </div>
     </div>
 <?php } ?>
+
+<!-- TODO : exprimental featutes
+<div class="popup">
+  <div id="warning" class=" alert alert-danger" role="alert">Silakan gunakan mode landscape untuk melanjutkan</div>
+</div>
+
+    <script>
+        function checkOrientation() {
+            if (window.innerHeight > window.innerWidth) {
+                document.getElementById('warning').style.display = 'block';
+            } else {
+                document.getElementById('warning').style.display = 'none';
+            }
+        }
+
+        window.addEventListener('resize', checkOrientation);
+        window.addEventListener('load', checkOrientation);
+
+        setTimeout(function() {
+            if (window.innerHeight > window.innerWidth) {
+                window.location.href = "?page"; // Ganti dengan URL halaman utama Anda
+            }
+        }, 5000); // Tunggu 5 detik sebelum redirect
+    </script>
+-->

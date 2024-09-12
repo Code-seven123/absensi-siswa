@@ -1,6 +1,14 @@
 <?php
     require __DIR__ . "/../connection.php";
 ?>
+<ul class="nav nav-tabs justify-content-between">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Absensi Siswa</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="auth/logout.php">Logout</a>
+  </li>
+</ul>
 <div class="container">
     <ul class="list-group mt-5">
         <?php

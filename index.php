@@ -7,29 +7,42 @@
         toPage("main");
         exit();
     }
+    $data = jwtV(isset($_SESSION["logindata"]) ? $_SESSION["logindata"] : "", $config["key"]);
+    if($data["status"] == false) {
+      redirect("auth/login.php");
+    }
     function selectPage() {
+        global $config;
+        global $data;
         $getParam = isset($_GET["page"]) ? $_GET["page"] : null;
         $encParam = base64_decode($getParam);
         switch ($encParam) {
             case 'siswa':
+                if($data["status"] != true) break;
                 include "page/siswa.php";
                 break;
             case 'tambahabsen':
+                if($data["status"] != true) break;
                 include "page/absen-add.php";
                 break;
             case 'editsiswa':
+                if($data["status"] != true) break;
                 include "page/siswa-edit.php";
                 break;
             case 'tambahsiswa':
+                if($data["status"] != true) break;
                 include "page/siswa-add.php";
                 break;
             case 'absen':
+                if($data["status"] != true) break;
                 include "page/absensi.php";
                 break;
             case 'hapussiswa':
+                if($data["status"] != true) break;
                 include "page/hapusiswa.php";
                 break;
             case 'editabsen':
+                if($data["status"] != true) break;
                 include "page/absen-edit.php";
                 break;
             default:

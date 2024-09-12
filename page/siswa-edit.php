@@ -79,6 +79,10 @@
                 </label>
             </div>
         </fieldset>
+         <div class="btn-group">
         <button type="submit" class="btn btn-primary">Simpan</button>
+
+        <a href="?page=<?= base64_encode('siswa') ?>&kelas=<?= $_GET['kelas'] ?>" class="btn btn-success">kembali</a>
+      </div>
     </form>
 </div>
