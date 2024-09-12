@@ -1,0 +1,9 @@
+{
+    "title": "Kepegawaian by maulana",
+    "mysql": {
+        "host": "127.0.0.1",
+        "user": "root",
+        "password": "",
+        "database": "absensi_siswa"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "manu/absensi_siswa",
+    "authors": [
+        {
+            "name": "maulana nurfanoto (manu)"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^2.2"
+    }
+}
