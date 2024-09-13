@@ -1,0 +1,11 @@
+# .htaccess file
+
+# Menolak akses ke semua file secara default
+Order Allow,Deny
+Deny from all
+
+# Mengizinkan akses ke file spesifik
+<Files "allowed-file.txt">
+    Order Allow,Deny
+    Allow from all
+</Files>
