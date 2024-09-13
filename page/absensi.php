@@ -66,7 +66,22 @@ $dataKelas = $querykelas->fetch();
 <div class="container">
   <div class="row">
     <div>
-      <div class="row align-items-center input-group button-group">
+      <div class="btn-group" role="group">
+        <button class="btn btn-outline-success"><i style="color: black" data-feather="settings" onclick="option()"></i></button>
+        <div class="btn-group toggle-none dropend">
+          <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <i style="color: black" data-feather="info"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item"><i data-feather="check-circle" width="17" style="color: green;"></i> : HADIR</li>
+            <li class="dropdown-item"><i data-feather="alert-circle" width="17" style="color: red;"></i> : SAKIT</li>
+            <li class="dropdown-item"><i data-feather="calendar" width="17" style="color: orange;"></i> : IZIN</li>
+            <li class="dropdown-item"><i data-feather="slash" width="17" style="color: black;"></i> : Tidak Ada Keterangan (Alpha)</li>
+            <li class="dropdown-item"><i data-feather="check-circle" width="17" style="color: red;"></i> : Hari Libur</li>
+          </ul>
+        </div>
+      </div>
+      <div id="optionabsensi" class="d-none ms-3 m-3">
         <div class="btn-group">
           <form method="get" class="mt-2 col-3" style="width: 400px">
             <input type="hidden" name="page" value="<?= base64_encode('absen') ?>">
@@ -117,22 +132,8 @@ $dataKelas = $querykelas->fetch();
             </div>
           </form>
         </div>
-        <div class="btn-group col-2" role="group" aria-label="Basic example">
-          <div class="btn-group">
-            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <i data-feather="info"></i> Info Icon
-            </button>
-            <ul class="dropdown-menu">
-              <li class="dropdown-item"><i data-feather="check-circle" width="17" style="color: green;"></i> : HADIR</li>
-              <li class="dropdown-item"><i data-feather="alert-circle" width="17" style="color: red;"></i> : SAKIT</li>
-              <li class="dropdown-item"><i data-feather="calendar" width="17" style="color: orange;"></i> : IZIN</li>
-              <li class="dropdown-item"><i data-feather="slash" width="17" style="color: black;"></i> : Tidak Ada Keterangan (Alpha)</li>
-              <li class="dropdown-item"><i data-feather="check-circle" width="17" style="color: red;"></i> : Hari Libur</li>
-            </ul>
-          </div>
-        </div>
       </div>
-      <table class="table table-striped">
+      <table class="table table-striped mt">
         <thead>
           <tr>
             <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">ID</th>

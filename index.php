@@ -62,6 +62,9 @@ function selectPage() {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <script src="https://unpkg.com/feather-icons"></script>
   <style>
+    .toggle-noe .dropdown-toggle::after {
+      display: none; /* Hapus panah */
+    }
     * {
     margin: 0;
     padding: 0;
@@ -118,6 +121,10 @@ function selectPage() {
     let url = new URL(window.location.href)
     url.searchParams.delete("id_siswa")
     window.location.href = url.toString();
+    }
+    function option() {
+      const opsi = document.getElementById("optionabsensi")
+      opsi.classList.toggle("d-none")
     }
   </script>
 
