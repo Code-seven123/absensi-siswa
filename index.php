@@ -11,6 +11,18 @@ $data = jwtV(isset($_SESSION["logindata"]) ? $_SESSION["logindata"] : "", $confi
 if ($data["status"] == false) {
   redirect("auth/login.php");
 }
+
+$usersAdmin = $conn->query("SELECT is_admin FROM users WHERE is_admin='true'");
+if($usersAdmin->rowCount() <= 0) {
+  $hashPassword = password_hash($config['admin']['password'], PASSWORD_BCRYPT);
+  $addAdmin = $conn->prepare("INSERT INTO `users`(`username`, `password`, `is_admin`) VALUES (?, ?, ?)");
+  if($addAdmin->execute([$config['admin']['username'], $hashPassword, 'true'])) {
+    $msg = "Users admin di buat";
+  } else {
+    $msg = "Terjadi error saat membuat user admin";
+  }
+}
+
 function selectPage() {
   global $config;
   global $data;
@@ -84,9 +96,41 @@ function selectPage() {
     left: 0;
     position: fixed;
     }
+   table {
+      table-layout: auto;
+      width: 100%;
+      overflow-x: auto;
+    }
+    @media (min-width: 10px) {
+      table {
+        transform: scale(0.28);
+        transform-origin: top left;
+      }
+      .siswa {
+        transform: scale(0.6);
+        transform-origin: top left;
+      }
+    }
+    @media (min-width: 768px) {
+      table {
+        transform: scale(1);
+        transform-origin: top left;
+      }
+      .siswa {
+        transform: scale(1);
+        transform-origin: top left;
+      }
+    }
   </style>
 </head>
 <body>
+  <?php if (isset($msg)) {
+    ?>
+    <div class="alert alert-danger" role="alert">
+      <?= $msg ?>
+    </div>
+    <?php
+  } ?>
   <?php selectPage() ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -15,7 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($searchUsers->rowCount()) {
       $data = $searchUsers->fetch();
       if (password_verify($pass, $data["password"])) {
-        $jwt = jwtE($data["id"], $data["username"], $config["key"]);
+        $is_admin = $data['is_admin'] == 'true' ? "admin" : "user";
+        $jwt = jwtE($data["id"], $data["username"], $config["key"], $is_admin);
         $_SESSION["logindata"] = $jwt;
 
         redirect("..");

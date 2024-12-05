@@ -1,9 +1,13 @@
 {
-    "title": "Kepegawaian by maulana",
-    "mysql": {
-        "host": "127.0.0.1",
-        "user": "root",
-        "password": "",
-        "database": "absensi_siswa"
-    }
+  "mysql": {
+      "host": "127.0.0.1",
+      "user": "root",
+      "password": "",
+      "database": "absensi"
+  },
+  "key": "Key jwt",
+  "admin": {
+      "username": "root",
+      "password": "root"
+  }
 }

@@ -52,8 +52,8 @@ $dataKelas = $querykelas->fetch();
       ?>" aria-current="page" href="?page=<?= base64_encode('absen') ?>&kelas=<?= $_GET['kelas'] ?>">Absensi</a>
   </li>
 </ul>
+<h2 class="ms-4">Data Siswa kelas <?= strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null) ?></h2>
 <div class="container">
-  <h2>Data Siswa kelas <?= strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null) ?></h2>
   <div class="btn-group" role="btn-group">
     <a href="?page=<?= base64_encode('tambahsiswa') ?>&kelas=<?= $_GET['kelas'] ?>" class="btn btn-success">Tambah</a>
     <!-- <a href="?page=<?= base64_encode('tambahsiswa') ?>&kelas=<?= $_GET['kelas'] ?>" class="btn btn-danger">Tambah Data by JSON</a> -->
@@ -65,7 +65,7 @@ $dataKelas = $querykelas->fetch();
     </div>
     <?php
   } ?>
-  <table class="table">
+  <table class="table siswa">
     <thead>
       <tr>
         <th scope="col">No</th>

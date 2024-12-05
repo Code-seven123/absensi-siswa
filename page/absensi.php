@@ -68,7 +68,7 @@ $dataKelas = $querykelas->fetch();
     <div>
       <div class="btn-group" role="group">
         <button class="btn btn-outline-success"><i style="color: black" data-feather="settings" onclick="option()"></i></button>
-        <div class="btn-group toggle-none dropend">
+        <div class="btn-group toggle-none dropdown">
           <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <i style="color: black" data-feather="info"></i>
           </button>
@@ -81,9 +81,9 @@ $dataKelas = $querykelas->fetch();
           </ul>
         </div>
       </div>
-      <div id="optionabsensi" class="d-none ms-3 m-3">
-        <div class="btn-group">
-          <form method="get" class="mt-2 col-3" style="width: 400px">
+      <div id="optionabsensi" class="d-none m-2">
+        <div class="btn-group row">
+          <form method="get" class="mt-2 col-12 col-sm-6 col-md-4" style="width: 380px">
             <input type="hidden" name="page" value="<?= base64_encode('absen') ?>">
             <input type="hidden" name="kelas" value="<?= $_GET['kelas'] ?>">
             <div class="input-group row">
@@ -107,7 +107,7 @@ $dataKelas = $querykelas->fetch();
               <button type="submit" class="btn btn-dark col-3" id="addon1"><i data-feather="search"></i></button>
             </div>
           </form>
-          <form action="save-xlsx.php" method="get" class="mt-2 col-3" style="width: 400px">
+          <form action="save-xlsx.php" method="get" class="mt-2 col-12 col-sm-6 col-md-4" style="width: 380px">
             <input type="hidden" name="page" value="<?= base64_encode('absen') ?>">
             <input type="hidden" name="kelas" value="<?= $_GET['kelas'] ?>">
             <div class="input-group row">
@@ -133,162 +133,174 @@ $dataKelas = $querykelas->fetch();
           </form>
         </div>
       </div>
-      <table class="table table-striped mt">
-        <thead>
-          <tr>
-            <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">ID</th>
-            <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">Nama Pegawai</th>
-            <th scope="col" colspan="<?= $day_length ?>" class="text-center border">Tanggal</th>
-          </tr>
-          <tr>
-            <?php for ($i = 1; $i <= $day_length; $i++) {
+
+
+      <div class="table-responsive-sm" id="tableres">
+        <table class="table table-striped mt-2 table-bordered">
+          <thead>
+            <tr>
+              <div id="th-sm-none">
+                <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">NO</th>
+                <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">NIS</th>
+                <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">Nama Pegawai</th>
+              </div>
+  
+              <th scope="col" colspan="<?= $day_length ?>" class="text-center border">Tanggal</th>
+            </tr>
+            <tr>
+              <?php for ($i = 1; $i <= $day_length; $i++) {
+                ?>
+                <th scope="col" class="border"><?= $i ?></th>
+                <?php
+              } ?>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (!empty($dataSiswa) && $siswaQuery) {
               ?>
-              <th scope="col" class="border"><?= $i ?></th>
-              <?php
-            } ?>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if (!empty($dataSiswa) && $siswaQuery) {
-            ?>
-            <?php foreach ($dataSiswa as $indexSiswa => $data) {
-              $id = $data["id_siswa"];
-              ?>
-              <tr class="border border-bottom-2">
-                <td class="border"><?= $id ?></td>
-                <td style="cursor: pointer" class="select border"><?= $data["nama_siswa"] ?></td>
-                <?php for ($i = 1; $i <= $day_length; $i++) {
-                  $searchAbsen = array_filter($dataAbsen, function($item) use($i, $id) {
-                    if (is_array($item) && isset($item['hari_tanggal'])) {
-                      return $item['hari_tanggal'] == $i && $item['id_siswa'] == $id;
-                    }
-                    return false;
-                  });
-                  $prossedData = array_merge(...$searchAbsen);
-                  ?>
-                  <?php if ($searchAbsen != false) {
-                    if (isset($_GET["bulan"]) && isset($_GET["year"])) {
-                      $str = $_GET['year']."-".$_GET["bulan"]."-".$i;
-                    } else {
-                      $str = date("Y")."-".date("m")."-".$i;
-                    }
-                    $dat = strtolower(date("D", strtotime($str)));
-                    $bool = $dat != "sun" || $dat != "sat";
+              <?php foreach ($dataSiswa as $indexSiswa => $data) {
+                $id = $data["id_siswa"];
+                ?>
+                <tr class="border border-bottom-2">
+                  <div id="td-sm-none">
+                    <td class="border"><?= $indexSiswa + 1 ?></td>
+                    <td class="border"><?= $data["nis"] ?></td>
+                    <td style="cursor: pointer" class="select border"><?= $data["nama_siswa"] ?></td>
+                  </div>
+  
+                  <?php for ($i = 1; $i <= $day_length; $i++) {
+                    $searchAbsen = array_filter($dataAbsen, function($item) use($i, $id) {
+                      if (is_array($item) && isset($item['hari_tanggal'])) {
+                        return $item['hari_tanggal'] == $i && $item['id_siswa'] == $id;
+                      }
+                      return false;
+                    });
+                    $prossedData = array_merge(...$searchAbsen);
                     ?>
-                    <?php if ($prossedData["status"] == "sakit" && $bool) {
-                      ?>
-                      <td class="text-center border select" style="vertical-align: middle; cursor: pointer;">
-                        <div class="dropup-center dropend">
-                          <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i data-feather="alert-circle" width="17" style="color: red;"></i>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li>
-                              <a class="dropdown-item" href="#">
-                                <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
-                              </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li class="text-center"><a style="width: 100%" class="link-underline-dark link-opacity-50 " href="?page=<?= base64_encode('absen') ?>&id_siswa=<?= $data['id_siswa'] ?>&absen=<?= $prossedData['absensi_id'] ?>&kelas=<?= $_GET['kelas'] ?>">Edit</a></li>
-                          </ul>
-                        </div>
-                      </td>
-                      <?php
-                    } else if ($prossedData["status"] == "izin" && $bool) {
-                      ?>
-                      <td class="text-center border select" style="vertical-align: middle; cursor: pointer;">
-                        <div class="dropup-center dropend">
-                          <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i data-feather="calendar" width="17" style="color: orange;"></i>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li>
-                              <a class="dropdown-item" href="#">
-                                <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
-                              </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li class="text-center"><a style="width: 100%" class="link-underline-dark link-opacity-50 " href="?page=<?= base64_encode('absen') ?>&id_siswa=<?= $data['id_siswa'] ?>&absen=<?= $prossedData['absensi_id'] ?>&kelas=<?= $_GET['kelas'] ?>">Edit</a></li>
-                          </ul>
-                        </div>
-                      </td>
-                      <?php
-                    } else if ($prossedData["status"] == "alpha" && $bool) {
-                      ?>
-                      <td class="text-center border select" style="vertical-align: middle; cursor: pointer;">
-                        <div class="dropup-center dropend">
-                          <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i data-feather="slash" width="17" style="color: black;"></i>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li>
-                              <a class="dropdown-item" href="#">
-                                <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
-                              </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li class="text-center"><a style="width: 100%" class="link-underline-dark link-opacity-50 " href="?page=<?= base64_encode('absen') ?>&id_siswa=<?= $data['id_siswa'] ?>&absen=<?= $prossedData['absensi_id'] ?>&kelas=<?= $_GET['kelas'] ?>">Edit</a></li>
-                          </ul>
-                        </div>
-                      </td>
-                      <?php
-                    } else {
-                      ?>
-                      <td class="text-center border select" style="vertical-align: middle; cursor: pointer;">
-                        <div class="dropup-center dropend">
-                          <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i data-feather="check-circle" width="17" style="color: red;"></i>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Hari Libur</a></li>
-                          </ul>
-                        </div>
-                      </td>
-                      <?php
-                    } ?>
-                    <?php
-                  } else {
-                    ?>
-                    <td class="text-center border">
-                      <?php
+                    <?php if ($searchAbsen != false) {
                       if (isset($_GET["bulan"]) && isset($_GET["year"])) {
                         $str = $_GET['year']."-".$_GET["bulan"]."-".$i;
                       } else {
                         $str = date("Y")."-".date("m")."-".$i;
                       }
                       $dat = strtolower(date("D", strtotime($str)));
-                      if (!($dat == "sun" || $dat == "sat")) {
+                      $bool = $dat != "sun" || $dat != "sat";
+                      ?>
+                      <?php if ($prossedData["status"] == "sakit" && $bool) {
                         ?>
-                        <i data-feather="check-circle" width="17" style="color: green;"></i>
+                        <td class="text-center border select" style="vertical-align: middle; cursor: pointer;">
+                          <div class="dropup-center dropend">
+                            <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i data-feather="alert-circle" width="17" style="color: red;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
+                                </a>
+                              </li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li class="text-center"><a style="width: 100%" class="link-underline-dark link-opacity-50 " href="?page=<?= base64_encode('absen') ?>&id_siswa=<?= $data['id_siswa'] ?>&absen=<?= $prossedData['absensi_id'] ?>&kelas=<?= $_GET['kelas'] ?>">Edit</a></li>
+                            </ul>
+                          </div>
+                        </td>
+                        <?php
+                      } else if ($prossedData["status"] == "izin" && $bool) {
+                        ?>
+                        <td class="text-center border select" style="vertical-align: middle; cursor: pointer;">
+                          <div class="dropup-center dropend">
+                            <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i data-feather="calendar" width="17" style="color: orange;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
+                                </a>
+                              </li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li class="text-center"><a style="width: 100%" class="link-underline-dark link-opacity-50 " href="?page=<?= base64_encode('absen') ?>&id_siswa=<?= $data['id_siswa'] ?>&absen=<?= $prossedData['absensi_id'] ?>&kelas=<?= $_GET['kelas'] ?>">Edit</a></li>
+                            </ul>
+                          </div>
+                        </td>
+                        <?php
+                      } else if ($prossedData["status"] == "alpha" && $bool) {
+                        ?>
+                        <td class="text-center border select" style="vertical-align: middle; cursor: pointer;">
+                          <div class="dropup-center dropend">
+                            <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i data-feather="slash" width="17" style="color: black;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
+                                </a>
+                              </li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li class="text-center"><a style="width: 100%" class="link-underline-dark link-opacity-50 " href="?page=<?= base64_encode('absen') ?>&id_siswa=<?= $data['id_siswa'] ?>&absen=<?= $prossedData['absensi_id'] ?>&kelas=<?= $_GET['kelas'] ?>">Edit</a></li>
+                            </ul>
+                          </div>
+                        </td>
                         <?php
                       } else {
                         ?>
-                        <div class="dropup-center dropend">
-                          <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i data-feather="check-circle" width="17" style="color: red;"></i>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Hari Libur</a></li>
-                          </ul>
-                        </div>
+                        <td class="text-center border select" style="vertical-align: middle; cursor: pointer;">
+                          <div class="dropup-center dropend">
+                            <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i data-feather="check-circle" width="17" style="color: red;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Hari Libur</a></li>
+                            </ul>
+                          </div>
+                        </td>
                         <?php
                       } ?>
-                    </td>
+                      <?php
+                    } else {
+                      ?>
+                      <td class="text-center border">
+                        <?php
+                        if (isset($_GET["bulan"]) && isset($_GET["year"])) {
+                          $str = $_GET['year']."-".$_GET["bulan"]."-".$i;
+                        } else {
+                          $str = date("Y")."-".date("m")."-".$i;
+                        }
+                        $dat = strtolower(date("D", strtotime($str)));
+                        if (!($dat == "sun" || $dat == "sat")) {
+                          ?>
+                          <i data-feather="check-circle" width="17" style="color: green;"></i>
+                          <?php
+                        } else {
+                          ?>
+                          <div class="dropup-center dropend">
+                            <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i data-feather="check-circle" width="17" style="color: red;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Hari Libur</a></li>
+                            </ul>
+                          </div>
+                          <?php
+                        } ?>
+                      </td>
+                      <?php
+                    } ?>
                     <?php
                   } ?>
-                  <?php
-                } ?>
-              </tr>
+                </tr>
+                <?php
+              } ?>
+              <?php
+            } else {
+              ?>
+              <td colspan="<?= 2 + $day_length ?>" class="text-center">Data Tidak Tersedia</td>
               <?php
             } ?>
-            <?php
-          } else {
-            ?>
-            <td colspan="<?= 2 + $day_length ?>" class="text-center">Data Tidak Tersedia</td>
-            <?php
-          } ?>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

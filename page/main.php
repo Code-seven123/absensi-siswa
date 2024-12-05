@@ -9,11 +9,19 @@ foreach ($dataKelas as $value) {
   }
 }
 $uniqueJurusan = array_unique($jurusan);
+$sesi = jwtD($_SESSION["logindata"], $config["key"]);
 ?>
 <ul class="nav nav-tabs justify-content-between">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Absensi Siswa</a>
-  </li>
+  <div class="d-flex justify-content-around">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="#">Absensi Siswa</a>
+    </li>
+    <?php if($sesi->role == "admin") { ?>
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="auth/user.php">User Manajemen</a>
+    </li>
+    <?php } ?>
+  </div>
   <li class="nav-item">
     <a class="nav-link" href="auth/logout.php">Logout</a>
   </li>
