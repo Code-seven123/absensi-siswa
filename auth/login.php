@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 require "../connection.php";
 require "../utility.php";
@@ -6,6 +10,17 @@ $data = jwtV(isset($_SESSION["logindata"]) ? $_SESSION["logindata"] : "", $confi
 if ($data["status"] == true) {
   redirect("..");
 }
+$usersAdmin = $conn->query("SELECT is_admin FROM users WHERE is_admin='true'");
+if($usersAdmin->rowCount() <= 0) {
+  $hashPassword = password_hash($config['admin']['password'], PASSWORD_BCRYPT);
+  $addAdmin = $conn->prepare("INSERT INTO `users`(`username`, `password`, `is_admin`) VALUES (?, ?, ?)");
+  if($addAdmin->execute([$config['admin']['username'], $hashPassword, 'true'])) {
+    $msg = "Users admin di buat";
+  } else {
+    $msg = "Terjadi error saat membuat user admin";
+  }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $pass = $_POST["pass"];
   $user = $_POST["user"];

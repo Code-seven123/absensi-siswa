@@ -7,10 +7,6 @@ if (!isset($_GET["page"])) {
   toPage("main");
   exit();
 }
-$data = jwtV(isset($_SESSION["logindata"]) ? $_SESSION["logindata"] : "", $config["key"]);
-if ($data["status"] == false) {
-  redirect("auth/login.php");
-}
 
 $usersAdmin = $conn->query("SELECT is_admin FROM users WHERE is_admin='true'");
 if($usersAdmin->rowCount() <= 0) {
@@ -21,6 +17,11 @@ if($usersAdmin->rowCount() <= 0) {
   } else {
     $msg = "Terjadi error saat membuat user admin";
   }
+}
+
+$data = jwtV(isset($_SESSION["logindata"]) ? $_SESSION["logindata"] : "", $config["key"]);
+if ($data["status"] == false) {
+  redirect("auth/login.php");
 }
 
 function selectPage() {
