@@ -142,7 +142,7 @@ $dataKelas = $querykelas->fetch();
               <div id="th-sm-none">
                 <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">NO</th>
                 <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">NIS</th>
-                <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">Nama Pegawai</th>
+                <th scope="col" rowspan="2" class="text-center border" style="vertical-align: middle">Nama Siswa</th>
               </div>
   
               <th scope="col" colspan="<?= $day_length ?>" class="text-center border">Tanggal</th>
