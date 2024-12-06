@@ -107,7 +107,7 @@ function selectPage() {
         transform-origin: top left;
       }
       .siswa {
-        transform: scale(0.6);
+        transform: scale(0.7);
         transform-origin: top left;
       }
     }

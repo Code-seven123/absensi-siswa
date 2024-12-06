@@ -135,7 +135,7 @@ $dataKelas = $querykelas->fetch();
       </div>
 
 
-      <div class="table-responsive-sm" id="tableres">
+      <div id="tableres">
         <table class="table table-striped mt-2 table-bordered">
           <thead>
             <tr>
