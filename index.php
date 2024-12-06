@@ -102,13 +102,16 @@ function selectPage() {
       width: 100%;
       overflow-x: auto;
     }
+    table th, table td {
+      white-space: nowrap;
+    }
     @media (min-width: 10px) {
       table {
-        transform: scale(0.28);
+        transform: scale(0.29);
         transform-origin: top left;
       }
       .siswa {
-        transform: scale(0.7);
+        transform: scale(0.60);
         transform-origin: top left;
       }
     }

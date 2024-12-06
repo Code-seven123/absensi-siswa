@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php if (isset($msg)) {
           ?>
           <div class="alert alert-danger" role="alert">
-            <?= $msg ?>
+            <?= htmlspecialchars($msg) ?>
           </div>
           <?php
         } ?>

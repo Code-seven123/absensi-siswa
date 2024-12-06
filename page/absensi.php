@@ -62,7 +62,7 @@ $dataKelas = $querykelas->fetch();
       ?>" aria-current="page" href="?page=<?= base64_encode('absen') ?>&kelas=<?= $_GET['kelas'] ?>">Absensi</a>
   </li>
 </ul>
-<h2 class="ms-4">Data Siswa kelas <?= strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null) ?></h2>
+<h2 class="ms-4">Data Siswa kelas <?= htmlspecialchars(strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null)) ?></h2>
 <div class="container">
   <div class="row">
     <div>
@@ -150,7 +150,7 @@ $dataKelas = $querykelas->fetch();
             <tr>
               <?php for ($i = 1; $i <= $day_length; $i++) {
                 ?>
-                <th scope="col" class="border"><?= $i ?></th>
+                <th scope="col" class="border"><?= htmlspecialchars($i) ?></th>
                 <?php
               } ?>
             </tr>
@@ -163,9 +163,9 @@ $dataKelas = $querykelas->fetch();
                 ?>
                 <tr class="border border-bottom-2">
                   <div id="td-sm-none">
-                    <td class="border"><?= $indexSiswa + 1 ?></td>
-                    <td class="border"><?= $data["nis"] ?></td>
-                    <td style="cursor: pointer" class="select border"><?= $data["nama_siswa"] ?></td>
+                    <td class="border"><?= htmlspecialchars($indexSiswa + 1) ?></td>
+                    <td class="border"><?= htmlspecialchars($data["nis"]) ?></td>
+                    <td style="cursor: pointer" class="select border"><?= htmlspecialchars(kapital($data["nama_siswa"])) ?></td>
                   </div>
   
                   <?php for ($i = 1; $i <= $day_length; $i++) {
@@ -196,7 +196,7 @@ $dataKelas = $querykelas->fetch();
                             <ul class="dropdown-menu">
                               <li>
                                 <a class="dropdown-item" href="#">
-                                  <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
+                                  <?= htmlspecialchars(!empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"]) ?>
                                 </a>
                               </li>
                               <li><hr class="dropdown-divider"></li>
@@ -215,7 +215,7 @@ $dataKelas = $querykelas->fetch();
                             <ul class="dropdown-menu">
                               <li>
                                 <a class="dropdown-item" href="#">
-                                  <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
+                                  <?= htmlspecialchars(!empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"]) ?>
                                 </a>
                               </li>
                               <li><hr class="dropdown-divider"></li>
@@ -234,7 +234,7 @@ $dataKelas = $querykelas->fetch();
                             <ul class="dropdown-menu">
                               <li>
                                 <a class="dropdown-item" href="#">
-                                  <?= !empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"] ?>
+                                  <?= htmlspecialchars(!empty($prossedData["keterangan"]) ? $prossedData["keterangan"] : $prossedData["status"]) ?>
                                 </a>
                               </li>
                               <li><hr class="dropdown-divider"></li>
@@ -325,12 +325,12 @@ $dataKelas = $querykelas->fetch();
       <div class="card-body">
         <form method="post" action="?page=<?= base64_encode("editabsen") ?>" class="" style="width: 100%">
           <div class="input-group">
-            <input type="hidden" name="kelas" value="<?= $_GET['kelas'] ?>">
-            <input type="hidden" name="siswa" value="<?= $dataSiswaSelect['id_siswa'] ?>">
+            <input type="hidden" name="kelas" value="<?= htmlspecialchars($_GET['kelas']) ?>">
+            <input type="hidden" name="siswa" value="<?= htmlspecialchars($dataSiswaSelect['id_siswa']) ?>">
             <input type="hidden" name="absen" value="
             <?= $dataSiswaSelect['absensi_id'] ?>
             ">
-            <span class="input-group-text"><?= $dataSiswaSelect["nama_siswa"] ?></span>
+            <span class="input-group-text"><?= htmlspecialchars($dataSiswaSelect["nama_siswa"]) ?></span>
             <select class="form-select" name="status">
               <option value="izin" <?= $dataSiswaSelect["status"] == 'izin' ? 'selected' : '' ?>>Izin</option>
               <option value="alpha" <?= $dataSiswaSelect["status"] == 'alpha' ? 'selected' : '' ?>>Alpha</option>

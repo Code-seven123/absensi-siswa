@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <div class="container">
-  <h2>Halaman Siswa kelas <?= strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null) ?></h2>
+  <h2>Halaman Siswa kelas <?= htmlspecialchars(strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null)) ?></h2>
   <form method="post" class="mt-4">
     <div class="row mb-3">
       <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Induk Siswa (NIS)</label>

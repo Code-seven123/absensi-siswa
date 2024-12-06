@@ -52,16 +52,15 @@ $dataKelas = $querykelas->fetch();
       ?>" aria-current="page" href="?page=<?= base64_encode('absen') ?>&kelas=<?= $_GET['kelas'] ?>">Absensi</a>
   </li>
 </ul>
-<h2 class="ms-4">Data Siswa kelas <?= strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null) ?></h2>
+<h2 class="ms-4">Data Siswa kelas <?= htmlspecialchars(strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null)) ?></h2>
 <div class="container">
   <div class="btn-group" role="btn-group">
     <a href="?page=<?= base64_encode('tambahsiswa') ?>&kelas=<?= $_GET['kelas'] ?>" class="btn btn-success">Tambah</a>
-    <!-- <a href="?page=<?= base64_encode('tambahsiswa') ?>&kelas=<?= $_GET['kelas'] ?>" class="btn btn-danger">Tambah Data by JSON</a> -->
   </div>
   <?php if (isset($_GET["msg"])) {
     ?>
     <div class="alert alert-danger" role="alert">
-      <?= $_GET["msg"] ?>
+      <?= htmlspecialchars($_GET["msg"]) ?>
     </div>
     <?php
   } ?>
@@ -82,11 +81,11 @@ $dataKelas = $querykelas->fetch();
         <?php foreach ($dataSiswa as $data) {
           ?>
           <tr>
-            <td scope="row"><?= $data["id_siswa"] ?></td>
-            <td><?= $data["nis"] ?></td>
-            <td><?= $data["nama_siswa"] ?></td>
-            <td><?= $data["kelas"] ?></td>
-            <td><?= $data["jenis_kelamin"] == "laki_laki" ? "Laki Laki" : "Perempuan" ?></td>
+            <td scope="row"><?= htmlspecialchars($data["id_siswa"]) ?></td>
+            <td><?= htmlspecialchars($data["nis"]) ?></td>
+            <td><?= htmlspecialchars(kapital($data["nama_siswa"])) ?></td>
+            <td><?= htmlspecialchars(strtoupper($data["kelas"])) ?></td>
+            <td><?= htmlspecialchars($data["jenis_kelamin"] == "laki_laki" ? "Laki Laki" : "Perempuan") ?></td>
             <td>
               <div class="btn-group" role="group">
                 <a class="btn btn-warning" href="?page=<?= base64_encode('editsiswa') ?>&id=<?= $data['id_siswa'] ?>&kelas=<?= $_GET['kelas'] ?>">Edit</a>
