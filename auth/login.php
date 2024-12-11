@@ -1,8 +1,4 @@
 <?php
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
 require "../connection.php";
 require "../utility.php";
@@ -50,12 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap demo</title>
+  <title>Absensi Siswa SMKN 1 MAJA</title>
+  <link rel="shortcut icon" href="https://www.svgrepo.com/show/427530/calendar-date-schedule.svg" type="image/x-icon">
+  <link rel="shortcut icon" href="" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
   <div class="container d-flex justify-content-center align-items-center" style="width: 100vw; height: 100vh">
-    <form action="" class="rounded text-center p-3 d-flex align-items-center flex-column"style="width: 400px; height: 400px; background-color: #ededed" method="post">
+    <form action="" class="rounded shadow-lg text-center p-3 d-flex align-items-center flex-column"style="width: 400px; height: 400px" method="post">
       <div>
         <hi class="text-center fs-2 mb-5">Sign Up</hi>
         <?php if (isset($msg)) {
@@ -65,15 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <?php
         } ?>
-        <div class="form-floating mt-5 mb-2">
+        <div class="form-floating mt-5 mb-2 shadow-sm">
           <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="user">
           <label for="floatingInput">Username</label>
         </div>
-        <div class="form-floating">
+        <div class="form-floating shadow-sm">
           <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pass">
           <label for="floatingPassword">Password</label>
         </div>
-        <button type="submit" class="btn btn-outline-warning mt-3" style="width: 100%">Login</button>
+        <button type="submit" class="btn btn-outline-warning mt-3 shadow-sm" style="width: 100%">Login</button>
       </div>
     </form>
   </div>
