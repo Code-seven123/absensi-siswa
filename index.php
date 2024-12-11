@@ -58,6 +58,10 @@ function selectPage() {
       if ($data["status"] != true) break;
     include "page/absen-edit.php";
     break;
+    case 'trashsiswa':
+      if ($data["status"] != true) break;
+    include "page/trashsiswa.php";
+    break;
     default:
       include "page/main.php";
       break;

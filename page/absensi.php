@@ -3,7 +3,7 @@ require __DIR__ . "/../connection.php";
 if (!isset($_GET["kelas"])) {
   toPage("main");
 }
-$siswaQuery = $conn->prepare("select * from data_siswa where kelas= :kelas");
+$siswaQuery = $conn->prepare("select * from data_siswa where kelas= :kelas AND is_deleted='false'");
 $siswaQuery->bindParam(":kelas", $_GET["kelas"]);
 $siswaQuery->execute();
 if (isset($_GET["bulan"]) && isset($_GET["year"])) {

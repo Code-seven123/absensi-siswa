@@ -7,7 +7,7 @@ $querySiswa = $conn->prepare("
         SELECT data_siswa.*, kelas.id_kelas, kelas.kelas
         FROM data_siswa
         JOIN kelas ON data_siswa.kelas = kelas.id_kelas
-        WHERE data_siswa.kelas = :id
+        WHERE data_siswa.kelas = :id AND data_siswa.is_deleted = 'false'
     ");
 $querySiswa->bindParam(":id", $_GET["kelas"]);
 $querySiswa->execute();
@@ -56,6 +56,7 @@ $dataKelas = $querykelas->fetch();
 <div class="container">
   <div class="btn-group" role="btn-group">
     <a href="?page=<?= base64_encode('tambahsiswa') ?>&kelas=<?= $_GET['kelas'] ?>" class="btn btn-success">Tambah</a>
+    <a href="?page=<?= base64_encode('trashsiswa') ?>&kelas=<?= $_GET['kelas'] ?>" class="btn btn-outline-danger">Trash <?= htmlspecialchars(strtoupper(isset($dataKelas[0]) ? $dataKelas[0] : null)) ?></a>
   </div>
   <?php if (isset($_GET["msg"])) {
     ?>

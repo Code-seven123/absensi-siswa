@@ -53,7 +53,7 @@ $sesi = jwtD($_SESSION["logindata"], $config["key"]);
                   "kelas" => $kelas["id_kelas"]
                 ]);
                 $querySiswa = $conn->prepare("
-                      SELECT id_siswa from data_siswa where kelas=:id
+                      SELECT id_siswa from data_siswa where kelas=:id and is_deleted='false'
                     ");
                 $querySiswa->bindParam(":id",
                   $kelas["id_kelas"]);

@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.9.5deb2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 06, 2024 at 02:47 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Dec 11, 2024 at 03:44 AM
+-- Server version: 10.3.39-MariaDB-0ubuntu0.20.04.2
+-- PHP Version: 8.2.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -42,7 +43,8 @@ CREATE TABLE `absen_siswa` (
 
 INSERT INTO `absen_siswa` (`absensi_id`, `hari_tanggal`, `tanggal_lengkap`, `id_siswa`, `status`, `keterangan`) VALUES
 (10, 11, '2024-09-11', 8, 'sakit', ''),
-(11, 5, '2024-12-05', 10, 'sakit', 'demam');
+(11, 10, '2024-12-10', 5, 'alpha', ''),
+(12, 11, '2024-12-11', 8, 'izin', '');
 
 -- --------------------------------------------------------
 
@@ -55,18 +57,17 @@ CREATE TABLE `data_siswa` (
   `nis` int(11) NOT NULL,
   `nama_siswa` varchar(255) NOT NULL,
   `kelas` int(11) NOT NULL,
-  `jenis_kelamin` enum('laki_laki','perempuan') NOT NULL
+  `jenis_kelamin` enum('laki_laki','perempuan') NOT NULL,
+  `is_deleted` enum('true','false') NOT NULL DEFAULT 'false'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `data_siswa`
 --
 
-INSERT INTO `data_siswa` (`id_siswa`, `nis`, `nama_siswa`, `kelas`, `jenis_kelamin`) VALUES
-(5, 222222222, 'galih', 2, 'laki_laki'),
-(8, 319493, 'Irvan', 3, 'laki_laki'),
-(9, 90909, 'sofyan', 2, 'laki_laki'),
-(10, 131313, 'susi', 1, 'perempuan');
+INSERT INTO `data_siswa` (`id_siswa`, `nis`, `nama_siswa`, `kelas`, `jenis_kelamin`, `is_deleted`) VALUES
+(5, 222222222, 'galih', 2, 'laki_laki', 'false'),
+(8, 319493, 'Irvan', 3, 'laki_laki', 'false');
 
 -- --------------------------------------------------------
 
@@ -102,6 +103,13 @@ CREATE TABLE `users` (
   `password` text DEFAULT NULL,
   `is_admin` enum('true','false') NOT NULL DEFAULT 'false'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `is_admin`) VALUES
+(1, 'admin1234', '$2y$10$EBQfasaskLhuf1Fj7q2imekvgVZLe2um2atyB9vB/zdHeXqRLt8S2', 'true');
 
 --
 -- Indexes for dumped tables
@@ -143,13 +151,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absen_siswa`
 --
 ALTER TABLE `absen_siswa`
-  MODIFY `absensi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `absensi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `data_siswa`
 --
 ALTER TABLE `data_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `kelas`
@@ -161,7 +169,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
